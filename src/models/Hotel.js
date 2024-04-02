@@ -20,7 +20,7 @@ const Hotel = sequelize.define('hotel', {
     },
     //citiesId forenea
     lat: {
-        type: DataTypes.INTERGER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     lon: {
