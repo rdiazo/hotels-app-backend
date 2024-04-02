@@ -9,7 +9,7 @@ cityRouter.route('/cities')
     .post(verifyJWT, create);
 
 cityRouter.route('/cities/:id')
-    .get(getOne)
+    .get(verifyJWT, getOne)
     .delete(verifyJWT, remove)
     .put(verifyJWT, update);
 

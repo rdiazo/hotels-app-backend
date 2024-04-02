@@ -9,22 +9,21 @@ const Hotel = sequelize.define('hotel', {
     description: {
         type: DataTypes.TEXT,
         allowNull: false
-    },  
-    price: {
+    },
+    Price: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    addres: {
-        type: DataTypes.TEXT,
+    Address: {
+        type: DataTypes.STRING,
         allowNull: false
     },
-    //citiesId forenea
     lat: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false
     },
     lon: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false
     },
 });

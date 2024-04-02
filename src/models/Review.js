@@ -2,12 +2,14 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../utils/connection');
 
 const Review = sequelize.define('review', {
-    rate: {
+    rating: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    //userId
-    //hotelId
+    comment: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
 });
 
 module.exports = Review;

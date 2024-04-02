@@ -11,7 +11,7 @@ cloudinary.config({
 // Aquí le podemos cambiar el nombre a la carpeta de "node_app", y ponerle
 // un nombre diferente a la carpeta donde queramos subir nuestros archivos
 // a cloudinary
-const folder = "hotels_app";
+const folder = "node_app";
 
 const uploadToCloudinary = async(file) => {
 	const { path: filePath, filename } = file

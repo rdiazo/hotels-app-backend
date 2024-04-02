@@ -1,36 +1,34 @@
 const catchError = require('../utils/catchError');
 const Hotel = require('../models/Hotel');
-const City = require('../models/City');
 const { Op } = require('sequelize');
-const Image = require('../models/Image');
 const Review = require('../models/Review');
+const City = require('../models/City');
+const Image = require('../models/Image');
 
-// query parameters y where
 const getAll = catchError(async(req, res) => {
-    const { cityId, name } = req.query;
-
+    const {name, cityId} = req.query
     const where = {}
-    if (cityId) where.cityId = cityId;
-    if (name) where.name = { [Op.iLike]: `%${name}%` };
-
-    const results = await Hotel.findAll( { 
-        include: [ City, Image, Review ], 
+    if(cityId) where.cityId = cityId
+    if(name) where.name = { [Op.iLike]: `%${name}%` }
+    const results = await Hotel.findAll({
+        include: [ Review, City, Image ],
         where: where,
     });
 
-    const hotelWithRating = results.map(hotel => {
-        const hotelJson = hotel.toJSON();
+    const newsWithRating = results.map(hotel => {
+        const newsJson = hotel.toJSON()
         let sum = 0
-        hotelJson.reviews.forEach(review => {   //reviews 
-            sum += review.rate
+        newsJson.reviews.forEach(review => {
+            sum += review.rating
         })
-        const reviewCount = hotelJson.reviews.length;
-        const average = reviewCount > 0 ? sum / reviewCount : 0;
-        delete hotelJson.reviews;
-       // console.log(average);
-        return { ...hotelJson, rating: average }
+        const totalReview = newsJson.reviews.length
+        const average = totalReview > 0 ? sum / totalReview : 0
+        delete newsJson.reviews
+        return { ...newsJson, rating: average}
+        
     })
-    return res.json(hotelWithRating);  
+
+    return res.json(newsWithRating);
 });
 
 const create = catchError(async(req, res) => {
@@ -40,11 +38,17 @@ const create = catchError(async(req, res) => {
 
 const getOne = catchError(async(req, res) => {
     const { id } = req.params;
-    const result = await Hotel.findByPk(id, { 
-        include: [ City, Image ]
-    } );
-    if(!result) return res.sendStatus(404);
-    return res.json(result);
+    const result = await Hotel.findByPk(id, {include: [Review, Image, City]});
+    if(!result) return res.sendStatus(404)
+    const newsJson = result.toJSON()
+        let sum = 0
+        newsJson.reviews.forEach(review => {
+            sum += review.rating
+        })
+        const totalReview = newsJson.reviews.length
+        const average = totalReview > 0 ? sum / totalReview : 0
+        delete newsJson.reviews
+        return res.json({ ...newsJson, rating: average});
 });
 
 const remove = catchError(async(req, res) => {

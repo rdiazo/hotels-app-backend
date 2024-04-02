@@ -5,10 +5,9 @@ const Image = sequelize.define('image', {
     url: {
         type: DataTypes.STRING,
         allowNull: false
-    }, 
-    //hotelId
-},{
-    timestamps: false,
+    },
+}, {
+    timestamps: false
 });
 
 module.exports = Image;

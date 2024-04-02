@@ -4,14 +4,13 @@ const sequelize = require('../utils/connection');
 const City = sequelize.define('city', {
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: false
     },
     country: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    countryId: {
+    countryId : {
         type: DataTypes.STRING,
         allowNull: false
     },

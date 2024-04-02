@@ -1,7 +1,7 @@
 const catchError = require('../utils/catchError');
 const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const getAll = catchError(async(req, res) => {
     const results = await User.findAll();
@@ -9,10 +9,10 @@ const getAll = catchError(async(req, res) => {
 });
 
 const create = catchError(async(req, res) => {
-    const { firstName, lastName, email, password, gender } = req.body;
-    const encriptedPassword = await bcrypt.hash(password, 10);
+    const {firstName, lastName, email, password, gender} = req.body
+    const encriptPassword = await bcrypt.hash(password, 10) 
     const result = await User.create({
-        firstName, lastName, email, password: encriptedPassword, gender,
+        firstName, lastName, email, password: encriptPassword, gender
     });
     return res.status(201).json(result);
 });
@@ -32,9 +32,9 @@ const remove = catchError(async(req, res) => {
 
 const update = catchError(async(req, res) => {
     const { id } = req.params;
-    const {  firstName, lastName, email, gender } = req.body;
+    const {firstName, lastName, email, gender} = req.body
     const result = await User.update(
-        {  firstName, lastName, email, gender },
+        {firstName, lastName, email, gender},
         { where: {id}, returning: true }
     );
     if(result[0] === 0) return res.sendStatus(404);
@@ -42,21 +42,22 @@ const update = catchError(async(req, res) => {
 });
 
 const login = catchError(async(req, res) => {
-    const { email, password } = req.body;
-const user = await User.findOne({ where: {email} });
-if(!user) return res.status(401).json({ message: "invalid credentials" });
-
-const isValid = await bcrypt.compare(password, user.password);
-if(!isValid) return res.status(401).json({ message: "invalid credentials" });
-
+    const {email, password} = req.body
+    const user = await User.findOne({where: {email}})
+    if(!user) return res.status(401).json({
+        message: 'Credenciales invalidas'
+    })
+    const isValid = await bcrypt.compare(password, user.password)
+    if(!isValid) return res.status(401).json({
+        message: 'Credenciales invalidas'
+    })
     const token = jwt.sign(
-            {user},
-            process.env.TOKEN_SECRET,
-            { expiresIn: '1d' },
+        { user },
+        process.env.TOKEN_SECRET,
+        { expiresIn: '1d' }
     )
-
-    return res.json({user, token});
-});
+    return res.json({user, token})
+})
 
 module.exports = {
     getAll,
@@ -64,5 +65,5 @@ module.exports = {
     getOne,
     remove,
     update,
-    login,   
+    login
 }

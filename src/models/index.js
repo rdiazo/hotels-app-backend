@@ -1,24 +1,24 @@
+const Booking = require("./Booking");
 const City = require("./City");
-const Image = require("./Image");
 const Hotel = require("./Hotel");
-const User = require("./User");
+const Image = require("./Image");
 const Review = require("./Review");
-const Reservation = require("./Reservation");
+const User = require("./User");
 
-City.hasMany(Hotel);
-Hotel.belongsTo(City);
+Hotel.belongsTo(City)
+City.hasMany(Hotel)
 
-Hotel.hasMany(Image);
-Image.belongsTo(Hotel);
+Image.belongsTo(Hotel)
+Hotel.hasMany(Image)
 
-User.hasMany(Review);
-Review.belongsTo(User);
+Review.belongsTo(Hotel)
+Hotel.hasMany(Review)
 
-Hotel.hasMany(Review);
-Review.belongsTo(Hotel);
+Review.belongsTo(User)
+User.hasMany(Review)
 
-Hotel.hasMany(Reservation);
-Reservation.belongsTo(Hotel);
+Booking.belongsTo(User)
+User.hasMany(Booking)
 
-User.hasMany(Reservation);
-Reservation.belongsTo(User);
+Booking.belongsTo(Hotel)
+Hotel.hasMany(Booking)
