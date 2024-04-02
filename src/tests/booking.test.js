@@ -20,8 +20,8 @@ test('GET/ bookings debe retornar todo los bookings ', async () => {
 
 test('POST/ bookings debe retornar el elemento creado', async () => {
     const body = {
-        checkIn: "2020-02-11",
-        checkOut: "2020-03-11"
+        checkIn: "2020-01-10",
+        checkOut: "2020-02-15"
     }
     const res = await request(app).post('/bookings').send(body).set('Authorization', `Bearer ${token}`)
     id = res.body.id

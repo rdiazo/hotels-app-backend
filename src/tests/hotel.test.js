@@ -22,10 +22,10 @@ test('POST/ hotels debe retornar el elemento creado', async () => {
     const body = {
     name: "test",
     description: "test",
-    Price: 743,
+    Price: 200,
     Address: "test",
-    lat: 48.875838090473664,
-    lon: 2.300348641089383
+    lat: 50.0000000000,
+    lon: -50.000000000
     }
     const res = await request(app).post('/hotels').send(body).set('Authorization', `Bearer ${token}`)
     id = res.body.id

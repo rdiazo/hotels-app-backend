@@ -20,9 +20,9 @@ test('GET/ cities debe retornar todo los cities ', async () => {
 
 test('POST/ cities debe retornar el elemento creado', async () => {
     const body = {
-        name: 'Quito',
-        country: 'Ecuador',
-        countryId: 'ECU',
+        name: 'caracas',
+        country: 'Venezuela',
+        countryId: 'VE',
     }
     const res = await request(app).post('/cities').send(body).set('Authorization', `Bearer ${token}`)
     id = res.body.id
@@ -33,7 +33,7 @@ test('POST/ cities debe retornar el elemento creado', async () => {
 
 test('PUT/ cities/:id debe retornar el elemento modificado por su id', async () => {
     const body = {
-        name: "Quito actualizado", 
+        name: "Caracas", 
     }
     const res = await request(app).put(`/cities/${id}`).send(body).set('Authorization', `Bearer ${token}`)
     expect(res.status).toBe(200);
